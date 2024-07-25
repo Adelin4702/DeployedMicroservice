@@ -117,7 +117,7 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(process, true);
-        file = new File("m.txt");
+
         if(file!=null) {
             helper.addAttachment("Your Report", file);
         }
