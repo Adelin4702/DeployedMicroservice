@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.File;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -12,5 +14,5 @@ public class NotificationRequestDto {
     private String nume;
     private String email;
     private String action;
-    private String filePath;
+    private File file;
 }

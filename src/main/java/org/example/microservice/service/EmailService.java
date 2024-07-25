@@ -52,7 +52,7 @@ public class EmailService {
                     body = "You are now part of our comunity, " + notificationRequestDto.getNume() + "\uD83E\uDD73\uD83E\uDD73";
                 }
 
-            sendHtmlEmail(notificationRequestDto.getEmail(), subject, body, "User.html", notificationRequestDto.getFilePath());
+            sendHtmlEmail(notificationRequestDto.getEmail(), subject, body, "User.html", notificationRequestDto.getFile());
             return new ResponseMessageDto("Success", "Email sent successfully");
 
         } catch (MessagingException e) {
@@ -83,7 +83,7 @@ public class EmailService {
                 body = "Your report is here, " + userMailDTO.getFirstName() + " " + userMailDTO.getLastName()+ "\uD83D\uDCC4";
             }
 
-            sendHtmlEmail(userMailDTO.getEmail(), subject, body, "User.html", userMailDTO.getFilePath());
+            sendHtmlEmail(userMailDTO.getEmail(), subject, body, "User.html", userMailDTO.getFile());
             return ;
 
         } catch (MessagingException e) {
@@ -99,10 +99,10 @@ public class EmailService {
      * @param subject The subject of the email.
      * @param body The body of the email.
      * @param templateName The name of the Thymeleaf template to use for the email.
-     * @param filePath The path of the file to attach to the email.
+     * @param file The file to attach to the email.
      * @throws MessagingException If there is an error creating or sending the email.
      */
-    public void sendHtmlEmail(String to, String subject, String body, String templateName, String filePath) throws MessagingException {
+    public void sendHtmlEmail(String to, String subject, String body, String templateName, File file) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         Context context = new Context();
         context.setVariable("body", body);
@@ -113,9 +113,8 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(process, true);
-        if(!filePath.equals("")) {
-            File f = new File(filePath);
-            helper.addAttachment("Your Report", f);
+        if(file!=null) {
+            helper.addAttachment("Your Report", file);
         }
 
         emailSender.send(message);
