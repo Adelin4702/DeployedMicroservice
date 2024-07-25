@@ -50,7 +50,11 @@ public class EmailService {
                 if(notificationRequestDto.getAction().equals("insert")){
                     subject = "User added";
                     body = "You are now part of our comunity, " + notificationRequestDto.getNume() + "\uD83E\uDD73\uD83E\uDD73";
-                }
+                }else
+                    if(notificationRequestDto.getAction().equals("report")){
+                        subject = "Monthly report";
+                        body = "Your monthly report has been generated, " + notificationRequestDto.getNume() + "\uD83E\uDD73\uD83E\uDD73";
+                    }
 
             sendHtmlEmail(notificationRequestDto.getEmail(), subject, body, "User.html", notificationRequestDto.getFile());
             return new ResponseMessageDto("Success", "Email sent successfully");
@@ -77,7 +81,7 @@ public class EmailService {
             if(userMailDTO.getAction().equals("insert")){
                 subject = "User added";
                 body = "You are now part of our comunity, " + userMailDTO.getFirstName() + " " + userMailDTO.getLastName()+ "\uD83E\uDD73\uD83E\uDD73";
-            }
+            } else
             if(userMailDTO.getAction().equals("report")){
                 subject = "Report";
                 body = "Your report is here, " + userMailDTO.getFirstName() + " " + userMailDTO.getLastName()+ "\uD83D\uDCC4";
@@ -113,9 +117,9 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(process, true);
-        if(file!=null) {
+//        if(file!=null) {
             helper.addAttachment("Your Report", file);
-        }
+//        }
 
         emailSender.send(message);
     }
