@@ -117,9 +117,9 @@ public class EmailService {
         helper.setTo(to);
         helper.setSubject(subject);
         helper.setText(process, true);
-//        if(file!=null) {
+        if(file!=null) {
             helper.addAttachment("Your Report", file);
-//        }
+        }
 
         emailSender.send(message);
     }
